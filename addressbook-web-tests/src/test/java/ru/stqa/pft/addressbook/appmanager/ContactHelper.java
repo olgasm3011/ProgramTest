@@ -44,6 +44,6 @@ public class ContactHelper extends HelperBase{
   }
 
   public void gotoAddContactPage() {
-    wd.findElement(By.linkText("add new")).click();
+   click(By.linkText("add new"));
   }
 }
