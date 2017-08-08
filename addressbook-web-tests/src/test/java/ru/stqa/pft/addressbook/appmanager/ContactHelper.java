@@ -47,21 +47,21 @@ public class ContactHelper extends HelperBase{
    click(By.linkText("add new"));
   }
 
-  public void selectContact(String id) {
-    click(By.id(id));
+  public void selectContact() {
+    click(By.name("selected[]"));
   }
 
   public void switchDelete(){
     switchTo();
   }
   public void deleteSelectedContact() {
-    click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
+    click(By.xpath(".//*[@value='Delete']"));
   }
   public void editContact() {
     click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
   }
 
   public void updateContact() {
-    click(By.xpath("//div[@id='content']/form[1]/input[22]"));
+    click(By.name("update"));
   }
 }
