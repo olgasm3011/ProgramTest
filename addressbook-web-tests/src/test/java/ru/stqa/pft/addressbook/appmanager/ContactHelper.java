@@ -8,7 +8,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
  * Created by oasmir12 on 04.08.2017.
  */
 public class ContactHelper extends HelperBase{
-  WebDriver wd;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
