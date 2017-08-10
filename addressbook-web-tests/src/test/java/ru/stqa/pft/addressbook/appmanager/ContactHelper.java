@@ -25,7 +25,6 @@ public class ContactHelper extends HelperBase{
     type(By.name("title"),contactData.getTitle());
     type(By.name("company"),contactData.getCompany());
     type(By.name("address"),contactData.getAddress());
-    click(By.name("theform"));
     click(By.name("home"));
     click(By.name("mobile"));
     type(By.name("home"),contactData.getHome());
@@ -39,11 +38,16 @@ public class ContactHelper extends HelperBase{
       click(By.xpath("//div[@id='content']/form/select[2]//option[12]"));
     }
     type(By.name("byear"),contactData.getByear());
-    click(By.name("theform"));
   }
 
   public void gotoAddContactPage() {
    click(By.linkText("add new"));
+  }
+
+  public void createContact(ContactData contact){
+    gotoAddContactPage();
+    fillContactCreation(contact);
+    submitContactCreation();
   }
 
   public void selectContact() {
@@ -57,10 +61,14 @@ public class ContactHelper extends HelperBase{
     click(By.xpath(".//*[@value='Delete']"));
   }
   public void editContact() {
-    click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    click(By.xpath("(.//*[@src='icons/pencil.png'])[1]"));
   }
 
   public void updateContact() {
     click(By.name("update"));
+  }
+
+  public boolean isThereContact() {
+    return isElementPresent(By.name("selected[]"));
   }
 }
