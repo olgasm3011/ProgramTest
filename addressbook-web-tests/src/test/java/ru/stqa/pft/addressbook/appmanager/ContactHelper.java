@@ -2,7 +2,12 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by oasmir12 on 04.08.2017.
@@ -53,7 +58,9 @@ public class ContactHelper extends HelperBase{
   public void selectContact() {
     click(By.name("selected[]"));
   }
-
+  public void selectContact(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
+  }
   public void switchDelete(){
     switchTo();
   }
@@ -63,6 +70,9 @@ public class ContactHelper extends HelperBase{
   public void editContact() {
     click(By.xpath("(.//*[@src='icons/pencil.png'])[1]"));
   }
+  public void editContact(int index) {
+    wd.findElements(By.xpath("(.//*[@src='icons/pencil.png'])")).get(index).click();
+  }
 
   public void updateContact() {
     click(By.name("update"));
@@ -70,5 +80,9 @@ public class ContactHelper extends HelperBase{
 
   public boolean isThereContact() {
     return isElementPresent(By.name("selected[]"));
+  }
+
+  public int getContactCount(){
+    return wd.findElements(By.name("selected[]")).size();
   }
 }
