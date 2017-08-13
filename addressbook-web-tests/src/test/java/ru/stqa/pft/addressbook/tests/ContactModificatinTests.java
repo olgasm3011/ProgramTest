@@ -29,12 +29,11 @@ public class ContactModificatinTests extends TestBase {
   public void testContactModification(){
     Contacts before = app.contact().all();
     ContactData modifyContact = before.iterator().next();
-    ContactData contact = new ContactData()
-            .withId(modifyContact.getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHome("777777").withMobile( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
+    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHome("777777").withMobile( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
     app.contact().modify(contact);
     app.goTo().contactPage();
+    assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()));
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
   }
 
