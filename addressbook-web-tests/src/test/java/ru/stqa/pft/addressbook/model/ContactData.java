@@ -12,8 +12,7 @@ public class ContactData {
   private String mobile;
   private String email2;
   private String email3;
-
-
+  private String allPhones;
   private String work;
   private String email;
   private String byear;
@@ -56,6 +55,10 @@ public class ContactData {
     return address;
   }
 
+  public String getAllPhones() {
+    return allPhones;
+  }
+
   public String getHomePhone() {
     return home;
   }
@@ -73,6 +76,11 @@ public class ContactData {
 
   public String getByear() {
     return byear;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
   }
 
   public ContactData withId(int id) {
