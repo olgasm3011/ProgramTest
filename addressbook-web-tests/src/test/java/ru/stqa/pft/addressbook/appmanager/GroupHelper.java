@@ -60,6 +60,10 @@ public class GroupHelper extends HelperBase {
     returnToGroupPage();
   }
 
+  public int count(){
+    return  wd.findElements(By.name("selected[]")).size();
+  }
+
   public void modify(GroupData group) {
     selectGroupById(group.getId());
     initGroupModification();

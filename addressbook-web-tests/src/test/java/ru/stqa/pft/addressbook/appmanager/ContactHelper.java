@@ -89,6 +89,10 @@ public class ContactHelper extends HelperBase{
     switchDelete();
     contactCash = null;
   }
+  public int count(){
+    return  wd.findElements(By.name("selected[]")).size();
+  }
+
   private Contacts contactCash = null;
   public Contacts all() {
     if (contactCash != null) {
