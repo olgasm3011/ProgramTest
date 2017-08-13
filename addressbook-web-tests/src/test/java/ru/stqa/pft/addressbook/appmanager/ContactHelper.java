@@ -51,12 +51,14 @@ public class ContactHelper extends HelperBase{
     gotoAddContactPage();
     fillContactCreation(contact);
     submitContactCreation();
+    contactCash = null;
   }
 
   public void modify(ContactData contact) {
     editContact(contact.getId());
     fillContactCreation(contact);
     updateContact();
+    contactCash = null;
   }
 
   public void selectContact(int index) {
@@ -85,18 +87,21 @@ public class ContactHelper extends HelperBase{
     selectContactById(contact.getId());
     deleteSelectedContact();
     switchDelete();
+    contactCash = null;
   }
-
+  private Contacts contactCash = null;
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if (contactCash != null) {
+      return new Contacts(contactCash);
+    }
+    contactCash = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("input[accept]"));
     for (WebElement element : elements) {
       String lastname = element.findElement(By.xpath("../../td[2]")).getText();
       String firstname = element.findElement(By.xpath("../../td[3]")).getText();
       int id = Integer.parseInt(element.getAttribute("value"));
-      ContactData contact = new ContactData().withId(id).withLastname(lastname).withFirstname(firstname);
-      contacts.add(contact);
+      contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstname(firstname));
     }
-    return contacts;
+    return new Contacts(contactCash);
   }
 }
