@@ -8,12 +8,13 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificatinTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().contactPage();
-    if (app.contact().list().size() == 0) {
+    if (app.contact().all().size() == 0) {
       app.contact().create(new ContactData().withLastname("Smirnova"));
     }
     app.goTo().contactPage();
@@ -21,20 +22,15 @@ public class ContactModificatinTests extends TestBase {
 
   @Test
   public void testGroupModification(){
-    List<ContactData> before = app.contact().list();
-    int index = before.size() - 1;
-    ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHome("777777").withMobile( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
-    app.contact().modify(index, contact);
+    Set<ContactData> before = app.contact().all();
+    ContactData modifyContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHome("777777").withMobile( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
+    app.contact().modify(contact);
     app.goTo().contactPage();
-    List<ContactData> after = app.contact().list();
+    Set<ContactData> after = app.contact().all();
     Assert.assertEquals(after.size(), before.size());
-    before.remove(index);
+    before.remove(modifyContact);
     before.add(contact);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
-
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 
