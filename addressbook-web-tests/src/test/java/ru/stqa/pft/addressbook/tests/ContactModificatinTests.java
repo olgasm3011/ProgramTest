@@ -1,32 +1,34 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificatinTests extends TestBase {
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().contactPage();
+    if (app.contact().list().size() == 0) {
+      app.contact().create(new ContactData().withLastname("Smirnova"));
+    }
+    app.goTo().contactPage();
+  }
 
   @Test
   public void testGroupModification(){
-    app.getNavigationHelper().goToContactPage();
-    if (!app.getContactHelper().isThereContact()){
-      app.getContactHelper().createContact(new ContactData("Olga", "Alexsandrovna", "Smirnova", "olgas", "Hello", "MTS", "Контратьевский 16", "777777", "+79929292292", "olgas301190@gmail.com", "1990"));
-    }
-    app.getNavigationHelper().goToContactPage();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().editContact(before.size() - 1);
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Olga", "Alexsandrovna", "Smirnova", "olgas", "Hello", "MTS", "Контратьевский 16.", "777777", "+79929292292", "olgas301190@gmail.com", "1990");
-    app.getContactHelper().fillContactCreation(contact);
-    app.getContactHelper().updateContact();
-    app.getNavigationHelper().goToContactPage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
+    int index = before.size() - 1;
+    ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHome("777777").withMobile( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
+    app.contact().modify(index, contact);
+    app.goTo().contactPage();
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
-    before.remove(before.size() - 1);
+    before.remove(index);
     before.add(contact);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 
@@ -35,4 +37,6 @@ public class ContactModificatinTests extends TestBase {
     after.sort(byId);
     Assert.assertEquals(before, after);
   }
+
+
 }
