@@ -51,7 +51,6 @@ public class GroupCreationTest extends TestBase {
     @Test (dataProvider = "validGroupsFromJSon")
     public void testGroupCreation(GroupData group) {
         app.goTo().groupPage();
-
         Groups before = app.group().all();
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size() + 1));

@@ -1,0 +1,18 @@
+<list>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <firstname>firstname 0</firstname>
+    <lastname>lastname 0</lastname>
+    <photo>src\test\resources\photo.jpg</photo>
+    <address>address 0</address>
+    <home>1234560</home>
+    <email>email0@mail.ru</email>
+  </ru.stqa.pft.addressbook.model.ContactData>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <firstname>firstname 1</firstname>
+    <lastname>lastname 1</lastname>
+    <photo>src\test\resources\photo.jpg</photo>
+    <address>address 1</address>
+    <home>1234561</home>
+    <email>email1@mail.ru</email>
+  </ru.stqa.pft.addressbook.model.ContactData>
+</list>
