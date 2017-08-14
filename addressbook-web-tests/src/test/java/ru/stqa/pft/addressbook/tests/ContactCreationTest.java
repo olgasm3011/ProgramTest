@@ -1,10 +1,12 @@
 package ru.stqa.pft.addressbook.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import ru.stqa.pft.addressbook.generators.FileDeserializer;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
@@ -22,17 +24,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactCreationTest extends TestBase {
 
   @DataProvider
-  public Iterator<Object[]> validContactsFromJSon() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")));
-    String json = "";
-    String line = reader.readLine();
-    while (line != null){
-      json += line;
-      line = reader.readLine();
+  public Iterator<Object[]> validContactFromJson() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson;
+
+      gson = new GsonBuilder().registerTypeAdapter(File.class, new FileDeserializer()).create();
+
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
+      return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
-    Gson gson = new Gson();
-    List<ContactData> groups = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
   @DataProvider
@@ -50,9 +56,7 @@ public class ContactCreationTest extends TestBase {
     return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
   }
 
-
-
-  @Test (dataProvider = "validContactsFromXml")
+  @Test (dataProvider = "validContactFromJson")
   public void testContactCreation(ContactData contact) {
     app.goTo().gotoHomePage();
     Contacts before = app.contact().all();
