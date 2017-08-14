@@ -17,6 +17,9 @@ task testGroups (type: Test){
     if (projects.hasProperty('browser')){
         systemProperties 'browser', "${browser}"
     }
+    if (projects.hasProperty('target')){
+        systemProperties 'targer', "${target}"
+    }
  }
 
 task testContacts (type: Test){
