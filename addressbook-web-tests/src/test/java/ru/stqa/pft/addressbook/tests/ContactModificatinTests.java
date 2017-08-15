@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,13 +22,17 @@ public class ContactModificatinTests extends TestBase {
 
   @Test
   public void testContactModification(){
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifyContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("Olga").withMiddlename("Alexsandrovna").withLastname("Smirnova").withNickname("olgas").withTitle("Hello").withCompany("MTS").withAddress("Контратьевский 16").withHomePhone("777777").withMobilePhone( "+79929292292").withEmail("olgas301190@gmail.com").withByear("1990");
+    File photo = new File("src/test/resources/photo.jpg");
+    ContactData contact = new ContactData().withId(modifyContact.getId()).withFirstname("firstname").
+            withPhoto(photo).withMiddlename("middlename").withLastname("lastname").withNickname("nikename").
+            withPhoto(photo).withTitle("Hello").withCompany("company").withAddress("address").withHomePhone("777777").
+            withMobilePhone( "+79929292292").withEmail("email@gmail.com").withByear("1990");
     app.contact().modify(contact);
     app.goTo().gotoHomePage();
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifyContact).withAdded(contact)));
   }
 
