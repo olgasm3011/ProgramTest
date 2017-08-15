@@ -47,6 +47,29 @@ public class ContactData {
   private String email3;
   @Transient
   private String allPhones;
+  @Column(name = "work")
+  @Type(type = "text")
+  private String work;
+  @Expose
+  @Column(name = "email")
+  @Type(type = "text")
+  private String email;
+  @Transient
+  private String byear;
+  @XStreamOmitField
+  @Id
+  @Column(name = "id")
+  private int id = Integer.MAX_VALUE;
+  private String group;
+
+ /* public String getGroup() {
+    return group;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }*/
 
   @Override
   public String toString() {
@@ -94,21 +117,6 @@ public class ContactData {
   public void setId(int id) {
     this.id = id;
   }
-
-  @Column(name = "work")
-  @Type(type = "text")
-  private String work;
-  @Expose
-  @Column(name = "email")
-  @Type(type = "text")
-  private String email;
-  @Transient
-  private String byear;
-  @XStreamOmitField
-  @Id
-  @Column(name = "id")
-  private int id = Integer.MAX_VALUE;
-
 
   public File getPhoto() {
     return new File(photo);
