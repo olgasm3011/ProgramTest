@@ -1,12 +1,16 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.List;
+
+import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
 
 public class ContactHelper extends HelperBase{
 
@@ -18,7 +22,7 @@ public class ContactHelper extends HelperBase{
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void fillContactCreation(ContactData contactData) {
+  public void fillContactCreation(ContactData contactData, Boolean creation) {
     type(By.name("firstname"),contactData.getFirstname());
     type(By.name("middlename"),contactData.getMiddlename());
     type(By.name("lastname"),contactData.getLastname());
@@ -40,22 +44,32 @@ public class ContactHelper extends HelperBase{
       click(By.xpath("//div[@id='content']/form/select[2]//option[12]"));
     }
     type(By.name("byear"),contactData.getByear());
+    if (creation) {
+      if (contactData.getGroups().size()>0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
+    } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+    }
   }
+
+
 
   public void gotoAddContactPage() {
    click(By.linkText("add new"));
   }
 
-  public void create(ContactData contact){
+  public void create(ContactData contact, Boolean creation){
     gotoAddContactPage();
-    fillContactCreation(contact);
+    fillContactCreation(contact, creation);
     submitContactCreation();
     contactCache = null;
   }
 
-  public void modify(ContactData contact) {
+  public void modify(ContactData contact, Boolean creation) {
     editContact(contact.getId());
-    fillContactCreation(contact);
+    fillContactCreation(contact, creation);
     updateContact();
     contactCache = null;
   }
