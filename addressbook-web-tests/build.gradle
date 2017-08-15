@@ -23,6 +23,9 @@ task testGroups (type: Test){
     if (projects.hasProperty('target')){
         systemProperties 'targer', "${target}"
     }
+    if (projects.hasProperty('verifyUI')){
+        systemProperties 'verifyUI', "${verifyUI}"
+    }
  }
 
 task testContacts (type: Test){
@@ -35,5 +38,7 @@ task testContacts (type: Test){
     if (projects.hasProperty('target')){
         systemProperties 'targer', "${target}"
     }
-
+    if (projects.hasProperty('verifyUI')){
+        systemProperties 'verifyUI', "${verifyUI}"
+    }
 }
