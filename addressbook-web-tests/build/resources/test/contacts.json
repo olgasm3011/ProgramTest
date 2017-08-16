@@ -1,0 +1,18 @@
+[
+  {
+    "firstname": "firstname 0",
+    "lastname": "lastname 0",
+    "photo": "src\\test\\resources\\photo.jpg",
+    "address": "address 0",
+    "home": "1234560",
+    "email": "email0@mail.ru"
+  },
+  {
+    "firstname": "firstname 1",
+    "lastname": "lastname 1",
+    "photo": "src\\test\\resources\\photo.jpg",
+    "address": "address 1",
+    "home": "1234561",
+    "email": "email1@mail.ru"
+  }
+]
