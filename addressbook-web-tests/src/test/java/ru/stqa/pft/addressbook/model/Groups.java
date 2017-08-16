@@ -32,6 +32,14 @@ public class Groups extends ForwardingSet<GroupData> {
     return groups;
   }
 
+  public Groups without(Groups groups) {
+    Groups r = new Groups(this);
+    for (GroupData group : groups) {
+      r.remove(group);
+    }
+    return r;
+  }
+
   @Override
   protected Set<GroupData> delegate() {
     return delegate;
