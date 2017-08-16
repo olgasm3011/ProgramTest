@@ -169,6 +169,7 @@ public class JamesHelper {
 
   public static MailMessage toModelMail(Message m) {
     try {
+      //return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
       return new MailMessage(m.getAllRecipients()[0].toString(), (Date) m.getSentDate(), (String) m.getContent());
     }catch (MessagingException e){
       e.printStackTrace();
@@ -177,6 +178,7 @@ public class JamesHelper {
       e.printStackTrace();
       return null;
     }
-
   }
+
+
 }

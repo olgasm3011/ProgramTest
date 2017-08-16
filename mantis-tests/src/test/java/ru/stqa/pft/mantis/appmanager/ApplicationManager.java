@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import ru.stqa.pft.mantis.model.DbHelper;
 
 import java.io.File;
 import java.io.FileReader;
@@ -22,6 +23,8 @@ public class ApplicationManager {
   private MailHelper mailHelper;
   private JamesHelper jamesHelper;
   private FtpHelper ftp;
+  private DbHelper dbHelper;
+  private PassChangeHelper passChangeHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -31,6 +34,7 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+    dbHelper = new DbHelper();
   }
 
   public void stop() {
@@ -86,5 +90,14 @@ public class ApplicationManager {
       ftp = new FtpHelper(this);
     }
     return ftp;
+  }
+  public DbHelper db() {
+    return dbHelper;
+  }
+  public PassChangeHelper user() {
+    if (passChangeHelper == null){
+      passChangeHelper = new PassChangeHelper(this);
+    }
+    return passChangeHelper;
   }
 }
