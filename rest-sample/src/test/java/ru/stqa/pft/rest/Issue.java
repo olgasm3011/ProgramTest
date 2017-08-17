@@ -7,7 +7,7 @@ public class Issue {
   private int id;
   private String subject;
   private String description;
-
+  private String state_name;
 
   public int getId() {
     return id;
@@ -31,7 +31,9 @@ public class Issue {
     return description;
   }
 
-
+  public String getStateName() {
+    return state_name;
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
