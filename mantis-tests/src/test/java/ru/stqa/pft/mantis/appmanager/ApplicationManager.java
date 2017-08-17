@@ -25,6 +25,7 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private DbHelper dbHelper;
   private PassChangeHelper passChangeHelper;
+  private SoapHelper soapHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -99,5 +100,11 @@ public class ApplicationManager {
       passChangeHelper = new PassChangeHelper(this);
     }
     return passChangeHelper;
+  }
+  public SoapHelper soap(){
+    if (soapHelper == null){
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
   }
 }
