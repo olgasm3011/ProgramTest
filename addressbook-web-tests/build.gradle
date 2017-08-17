@@ -42,3 +42,6 @@ task testContacts (type: Test){
         systemProperties 'verifyUI', "${verifyUI}"
     }
 }
+test{
+    useTestNG()
+}
